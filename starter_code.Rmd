@@ -128,3 +128,31 @@ metrics(x_2, truth = dvote, estimate = pred_dvote) %>%
 
 ```
 
+```{r}
+# Clean up the above code:
+training_testing <- initial_split(clean)
+training_set <- training(training_testing)
+testing_set <- testing(training_testing)
+
+model_3 <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(dvote ~ gender + party + state + office, data = training_set)
+
+```
+
+```{r}
+training_testing <- initial_split(clean, prop = 0.01)
+training_set <- training(training_testing)
+testing_set <- testing(training_testing)
+
+logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(dvote ~ gender + party + state + office, data = training_set) %>%
+  predict(new_data = testing_set) %>%
+  bind_cols(testing_set) %>%
+  metrics(truth = dvote, estimate = .pred_class) %>%
+  gt() 
+
+
+```
+
