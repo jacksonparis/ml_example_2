@@ -141,6 +141,7 @@ model_3 <- logistic_reg() %>%
 ```
 
 ```{r}
+set.seed(10)
 training_testing <- initial_split(clean, prop = 0.01)
 training_set <- training(training_testing)
 testing_set <- testing(training_testing)
@@ -153,6 +154,6 @@ logistic_reg() %>%
   metrics(truth = dvote, estimate = .pred_class) %>%
   gt() 
 
-
 ```
 
+Don't use all the data!!
